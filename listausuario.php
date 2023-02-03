@@ -1,6 +1,10 @@
 <?php
+#abre conexao para o banco de dados
 include("conectadb.php");
 
+
+#passa a instruçao para o bando de dados
+#funçao da instruçao: LISTAR TODOS O CONTEUDO DA TABELA usuarios
 $sql = "SELECT * FROM usuarios";
 $resultado = mysqli_query($link, $sql);
 
