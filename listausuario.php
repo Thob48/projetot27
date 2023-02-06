@@ -38,6 +38,7 @@ $resultado = mysqli_query($link, $sql);
                         <td><?= $tbl[1]?></td>
                         <td><a href="alterausuario.php?id=<?= $tbl[0]?>"><input type="button" value="ALTERAR"></a></td>
                         <td><a href="excluiusuario.php?id=<?= $tbl[0]?>"><input type="button" value="EXCLUIR"></a></td>
+                        <td><?=tbl[3]?></td>
                     </tr>
                     <?php
                 }
