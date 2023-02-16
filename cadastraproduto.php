@@ -1,25 +1,24 @@
-
 <?php
 #Coleta as variáveis do name do html e abre a conexão com Banco
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $nome = $_POST['nome'];
-    $senha = $_POST['senha'];
+    $marca = $_POST['marca'];
     include("conectadb.php");
 
     #VERIFICA USUARIO EXISTENTE
-    $sql ="SELECT COUNT(usu_id) from usuarios WHERE usu_nome = '$nome' AND usu_senha = '$senha'";
+    $sql ="SELECT COUNT(prod_id) from produtos WHERE prod_nome = '$nome' AND prod_marca = '$marca'";
     $resultado = mysqli_query($link,$sql);
     while($tbl = mysqli_fetch_array($resultado)){
         $cont = $tbl[0];
     }
     #Verificação visual se usuario existe ou não.
     if($cont==1){
-        echo"<script>window.alert('USUARIO JÁ CADASTRADO!');</script>";
+        echo"<script>window.alert('PRODUTO JÁ CADASTRADO!');</script>";
     }
     else{
-        $sql = "INSERT INTO usuarios (usu_nome, usu_senha, usu_ativo) VALUES('$nome', '$senha','n')";
+        $sql = "INSERT INTO usuarios (prod_nome, prod_marca) VALUES('$nome', '$marca','n')";
         mysqli_query($link,$sql);
-        header("Location: listausuario.php");
+        header("Location: listaproduto.php");
     }
 
 }
@@ -32,31 +31,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="estilo.css">
-    <title>CADASTRO DE USUARIOS</title>
+    <title>CADASTRO DE PRODUTOS</title>
 </head>
 <body>
     <a href="homesistema.html"><input type="button" id="menuhome" value="HOME SISTEMA"></a>
-    <div>
-        <!-- script para mostrar senha-->
-    <script>
-        function mostrarsenha(){
-            var tipo = document.getElementById("senha");
-            if(tipo.type == "password"){
-                tipo.type ="text" ;
-
-            }
-            else{
-                tipo.type = "password";
-            }
-        }
+   
     </script>
 
-    <form action="cadastrausuario.php" method="POST">
-        <h1>CADASTRO DE USUARIOS</h1>
+    <form action="cadastraproduto.php" method="POST">
+        <h1>CADASTRO DE produtos</h1>
         <input type="text" name="nome" id="nome" placeholder="NOME" required>
         <p></p>
-        <input type="password" id="senha" name="senha" placeholder="SENHA" required>
-        <img id="olinho" onclick="mostrasenha()" src="assets/eye.svg">
+        <input type="text" id="marca" name="marca" placeholder="marca" required>
+        
         <p></p>
         <input type="submit" name="cadastrar" id="cadastrar" value="CADASTRAR">
     </form>

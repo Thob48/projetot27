@@ -1,20 +1,25 @@
-<?php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LISTA PRODUTOS</title>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+    <a href="homesistema.html"><input type="button" name="voltahomesistema" value="HOME SISTEMA"></a>
+    <div>
+        <table border="1">
+        <?php
 #abre conexao para o banco de dados
 include("conectadb.php");
 
 
 #passa a instruçao para o bando de dados
 #funçao da instruçao: LISTAR TODOS O CONTEUDO DA TABELA usuarios
-$sql="SELECT* FROM usuarios Where usu_ativo='s'";
-$resultado=mysqli_query($link,$sql);
-$ativo="s";
-if ($_SERVER['REQUEST_METHOD']=='POST') {
-    $ativo="s";
-}
-else {
-        $sql="SELECT*FROM usuarios  WHERE usu_ativo='n'";
-        $resultado=mysqli_query($link,$sql);
-}
+$sql = "SELECT * FROM produtos";
+$resultado = mysqli_query($link, $sql);
 
 ?>
 
@@ -32,16 +37,11 @@ else {
 
 <body>
     <a href="homesistema.html"><input type="button" id="menuhome" value="HOME SISTEMA"></a>
-    <form action="listausuario.php" method="post">
-        <input type="radio" name="ativo" value="s" required onclick="submit()"<?=$ativo=='s'?"checeked":""?>>ATIVO<BR>
-        <input type="radio" name="ativo" value="n" required onclick="submit()"<?=$ativo=='n'?"checeked":""?>>INATIVO
-    </form>
     <div class="container">
         <table border="1">
             <tr>
                 <th>NOME</th>
                 <th>ALTERAR DADOS</th>
-                <th>ATIVO</th>
             </tr>
             <?php
                 while ($tbl = mysqli_fetch_array($resultado)){
@@ -59,4 +59,8 @@ else {
     </div>
 </body>
 
+</html>
+</table>
+</div>
+</body>
 </html>
