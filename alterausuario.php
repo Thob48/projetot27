@@ -33,7 +33,7 @@ while ($tbl=mysqli_fetch_array($resultado)) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="estilo.css">
+    <link rel="stylesheet" href="newestilo.css">
     <title>Altera Usuario</title>
 </head>
 <!-- <body>
@@ -49,6 +49,7 @@ while ($tbl=mysqli_fetch_array($resultado)) {
 </div>
 </body> -->
 <body>
+<a href="homesistema.html"><input type="button" id="menuhome" value="HOME SISTEMA"></a>
     <div>
         <form action="alterausuario.php" method="post">
         <input type="hidden" name="id" value="<?=$id?>" > <!-- coleta id ao carrega a página de forma oculta-->

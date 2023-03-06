@@ -1,7 +1,7 @@
 <?php 
 #conexao do banco de dados
 include('conectadb.php');
-
+// carrega pagina com produos ativos
 #coleta de variaveis dos capos de texto HTML
 if ($_SERVER['REQUEST_METHOD']=='POST') {
     $id=$_POST['id'];
@@ -10,7 +10,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
     $quantidade=$_POST['quantidade'];
     $preco=$_POST['preco'];
     $ativo=$_POST['ativo'];
-    #Instruçao sql para atualizaçao de usuario e senha
     $sql="UPDATE produtos SET pro_drescricao='$descricao',pro_nome='$nome',pro_ativo='$ativo',pro_quantidade='$quantidade  WHERE pro_id=$id";
     mysqli_query($link,$sql);
    
@@ -22,17 +21,22 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 // $sql="SELECT * FROM produtos WHERE pro_id='$id'";
 // $resultado= mysqli_fetch_array($link,$sql);
 
-#colentando id link exemplo alteusuario.php?id=2
+
 $id = $_GET['id'];
 $sql ="SELECT * FROM produtos WHERE pro_id='$id'";
 $resultado=mysqli_query($link,$sql);
-while ($tbl=mysqli_fetch_array($resultado)) {
-  
-    $nome=$tbl[1];
-    $senha=$tbl[2];
-    $ativo=$tbl[3];
-}
-?>
+while ($tbl=mysqli_fetch_array($resultado))?> {
+    
+   <tr>
+    <td><?=$tbl[0]?><td>
+    <td><?=$tbl[4]?><td>
+    <td><?=$tbl[3]?><td>
+    <td><?=$tbl[2]?><td>
+    <td><?=$tbl[1]?><td>
+<td>R$<?+number_format($tbl[3],2',','.')?></td>
+ 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,6 +46,7 @@ while ($tbl=mysqli_fetch_array($resultado)) {
     <title>alteraproduto</title>
 </head>
 <body>
+<a href="homesistema.html"><input type="button" id="menuhome" value="HOME SISTEMA"></a>
     <div>
         <form action="ateraproduto.php" method="post">
             <input type="hidden" name="id" value="<?=id?>">
@@ -51,9 +56,10 @@ while ($tbl=mysqli_fetch_array($resultado)) {
             <input type="number" name="quantidade",value=",<?=$quantidade?>"required>
             <input type="number" name="preco",value=",<?=$preco?>"required>
             <br></br>
-            <label>Status: <?=$check = ($ativo == 's')?"ATIVO":"INATIVO";?></label>
-        <input type="radio" name="ativo" value="s" <?=$ativo == "s"? "checked":""?>>ATIVO<br>
-        <input type="radio" name="ativo" value="n"<?=$ativo == "n"? "checked":""?>>INATIVO
+            <label>Status: <?=$check = ($ativo == 's')?"ATIVO":"INATIVO";?></label><br>
+            <!-- onclick submit() é um um javascript que ja faz o submit na pagin usando o navegador -->
+        <input type="radio" name="ativo" value="s" required onclick="submit()"<?=$ativo == "s"? "checked":""?>>ATIVO<br>
+        <input type="radio" name="ativo" value="n" required onclick="submit()"<?=$ativo == "n"? "checked":""?>>INATIVO
 
         <input type="submit" value="SALVAR">
             
