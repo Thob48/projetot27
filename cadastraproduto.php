@@ -6,25 +6,34 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $descricao=$_POST['descricao'];
     $quantidade=$_POST['quantidade'];
     $preco=$_POST['preco'];
-    $foto1=$_POST["foto1"];
+    //criptografa a foto para o banco de dados
+if (isset($_FILES['imagem']) && $_FILES['imagem']['error']===UPLOAD_ERR_OK) {
+    $imagem_temp = $_FILES['imagem']['tmp_name'];
+    $imagem= file_get_contents($imagem_temp);
+    $imagem_base64 = base64_encode($imagem);
+    
+}
+
     // $foto2=$_POST["foto2"];
-    if ($foto1=="")$img="semfoto.png";
-    $sql="SELECT COUNT (pro_id) FROM produtos WHERE pro_nome='$nome'";
+   // if ($foto1=="")$img="semfoto.png";
+   // $sql="SELECT COUNT (pro_id) FROM produtos WHERE pro_nome='$nome'";
    
 #variaveis para coletar informaçoes no banco de dados sql
-    $sql="SELECT COUNT(prod_id) from produtos WHERE prod_nome = '$nome'";
+    $sql="SELECT COUNT(pro_id) from produtos WHERE pro_nome = '$nome'";
     $resultado = mysqli_query($link,$sql);
     while($tbl = mysqli_fetch_array($resultado)){
         $cont = $tbl[0]; 
     #Verificação visual se produto já existe no banco de dados ou não.
-    if($cont==1){
-        echo"<script>window.alert('PRODUTO JÁ CADASTRADO!');</script>";
+    if($cont==0){
+        $sql = "INSERT INTO produtos (pro_nome, pro_descricao,pro_quantidade,pro_preco,pro_ativo,imagem1) VALUES('$nome', '$descricao','$quantidade',' $preco','s','$imagem_base64')";
+        mysqli_query($link, $sql);
+        echo($cont);
+        header("Location: listaprodutos.php");
+        exit();
     }
     // mostra o alerta se o produto com as memsas informaçoes ja existe no banco de dados
     else{
-        $sql = "INSERT INTO produtos (pro_nome, pro_descricao,pro_quantidade,pro_preco,imagem1) VALUES('$nome', '$descricao','$quantidade',' $preco','s','$foto1')";
-        mysqli_query($link,$sql);
-        header("Location: listaproduto.php");
+        echo "<script>window.alert('PRODUTO JÁ CADASTRADO!');</script>";
     }
 }
     // o esle insere as informaçao no listaproduto.php
@@ -46,7 +55,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
    
     </script>
 <!-- aqui é a interface do usuario -->
-    <form action="cadastraproduto.php" method="POST">
+    <form action="cadastraproduto.php" method="POST" enctype="multipart/for-data">
         <h1>CADASTRO DE produtos</h1>
         <input type="text" name="nome" id="nome" placeholder="NOME" required>
         <p></p>
@@ -55,10 +64,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <input type="text" name="preco" id="preco" placeholder="VALOR" required>
         <p></p>
         <input type="submit" name="cadastrar" id="cadastrar" value="CADASTRAR">
-        <label>Imagem</label><input type="file" name="foto1" id="img1" onchange="foto1()"><img src="img/semfoto.png" width="100px" id="foto1"></form>
+        <label>Imagem</label><input type="file" name="imagem" id="img1">
         
     </form>
-    <script>function foto1(){document.getElementById("foto1").src = "img/" (document.getElementById("img1").value).slice(12);}</script>
+    <script>function foto1(){document.getElementById("foto1a").src = "img/" (document.getElementById("img1").value).slice(12);}</script>
    
 
 
