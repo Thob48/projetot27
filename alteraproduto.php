@@ -10,12 +10,12 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
     $quantidade=$_POST['quantidade'];
     $preco=$_POST['preco'];
     $ativo=$_POST['ativo'];
-    $sql="UPDATE produtos SET pro_drescricao='$descricao',pro_nome='$nome',pro_ativo='$ativo',pro_quantidade='$quantidade  WHERE pro_id=$id";
+    $sql="UPDATE produtos SET pro_nome='$nome',pro_drescricao='$descricao',pro_quantidade='$quantidade,pro_preco = '$preco',pro_ativo='$ativo'  WHERE pro_id=$id";
     mysqli_query($link,$sql);
    
-    header("Location:listausuario.php");
+    header("Location:listaprodutos.php");
     echo"<script>window.alert('produto ALTERNADO COM SUCESSO! ');</script>";
-    exit();
+
 }
 // $id=$_GET['id'];
 // $sql="SELECT * FROM produtos WHERE pro_id='$id'";
@@ -25,17 +25,16 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 $id = $_GET['id'];
 $sql ="SELECT * FROM produtos WHERE pro_id='$id'";
 $resultado=mysqli_query($link,$sql);
-while ($tbl=mysqli_fetch_array($resultado))?> {
-    
-   <tr>
-    <td><?=$tbl[0]?><td>
-    <td><?=$tbl[4]?><td>
-    <td><?=$tbl[3]?><td>
-    <td><?=$tbl[2]?><td>
-    <td><?=$tbl[1]?><td>
-<td>R$<?+number_format($tbl[3],2',','.')?></td>
- 
+while ($tbl=mysqli_fetch_array($resultado)) {
+     $nome = $tbl[1];
+    $descricao = $tbl[2];
+    $quantidade = $tbl[4];
+    $preco = $tbl[3];
+    $ativo = $tbl[5];
 
+}
+ 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -43,17 +42,21 @@ while ($tbl=mysqli_fetch_array($resultado))?> {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="newestilo.css">
     <title>alteraproduto</title>
 </head>
 <body>
 <a href="homesistema.html"><input type="button" id="menuhome" value="HOME SISTEMA"></a>
     <div>
         <form action="ateraproduto.php" method="post">
-            <input type="hidden" name="id" value="<?=id?>">
+            <input type="hidden" name="id" value="<?=$id?>">
             <label>NOME</label>
             <input type="text" name="nome",value=",<?=$nome?>"required>
+            <label>DESCRIÇÃO</label>
             <input type="text" name="descricao",value=",<?=$descricao?>"required>
+            <label>QUANTIDADE</label>
             <input type="number" name="quantidade",value=",<?=$quantidade?>"required>
+            <label>PRECO</label>
             <input type="number" name="preco",value=",<?=$preco?>"required>
             <br></br>
             <label>Status: <?=$check = ($ativo == 's')?"ATIVO":"INATIVO";?></label><br>

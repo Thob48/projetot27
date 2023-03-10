@@ -14,30 +14,22 @@ if (isset($_FILES['imagem']) && $_FILES['imagem']['error']===UPLOAD_ERR_OK) {
     
 }
 
-    // $foto2=$_POST["foto2"];
-   // if ($foto1=="")$img="semfoto.png";
-   // $sql="SELECT COUNT (pro_id) FROM produtos WHERE pro_nome='$nome'";
-   
 #variaveis para coletar informaçoes no banco de dados sql
-    $sql="SELECT COUNT(pro_id) from produtos WHERE pro_nome = '$nome'";
-    $resultado = mysqli_query($link,$sql);
-    while($tbl = mysqli_fetch_array($resultado)){
-        $cont = $tbl[0]; 
-    #Verificação visual se produto já existe no banco de dados ou não.
-    if($cont==0){
-        $sql = "INSERT INTO produtos (pro_nome, pro_descricao,pro_quantidade,pro_preco,pro_ativo,imagem1) VALUES('$nome', '$descricao','$quantidade',' $preco','s','$imagem_base64')";
+$sql = "SELECT COUNT(pro_id) FROM produtos WHERE pro_nome = '$nome'";
+$resultado = mysqli_query($link, $sql);
+
+while ($tbl = mysqli_fetch_array($resultado)) {
+    $cont = $tbl[0];
+    if ($cont == 0) {
+        $sql = "INSERT INTO produtos(pro_nome, pro_descricao, pro_quantidade, pro_preco, pro_ativo, imagem1) VALUES('$nome', '$descricao', '$quantidade', '$preco', 's', '$imagem_base64')";
         mysqli_query($link, $sql);
-        echo($cont);
         header("Location: listaprodutos.php");
         exit();
-    }
-    // mostra o alerta se o produto com as memsas informaçoes ja existe no banco de dados
-    else{
+        
+    } else {
         echo "<script>window.alert('PRODUTO JÁ CADASTRADO!');</script>";
     }
 }
-    // o esle insere as informaçao no listaproduto.php
-
 }
 ?>
 
@@ -55,7 +47,7 @@ if (isset($_FILES['imagem']) && $_FILES['imagem']['error']===UPLOAD_ERR_OK) {
    
     </script>
 <!-- aqui é a interface do usuario -->
-    <form action="cadastraproduto.php" method="POST" enctype="multipart/for-data">
+    <form action="cadastraproduto.php" method="POST" enctype="multipart/form-data">
         <h1>CADASTRO DE produtos</h1>
         <input type="text" name="nome" id="nome" placeholder="NOME" required>
         <p></p>
@@ -64,10 +56,13 @@ if (isset($_FILES['imagem']) && $_FILES['imagem']['error']===UPLOAD_ERR_OK) {
         <input type="text" name="preco" id="preco" placeholder="VALOR" required>
         <p></p>
         <input type="submit" name="cadastrar" id="cadastrar" value="CADASTRAR">
-        <label>Imagem</label><input type="file" name="imagem" id="img1">
+        <!-- BLOCO DE CÓDIGO NOVO -->
+        <label>IMAGEM</label>
+            <!-- <input type="file" name="foto1" id="img1" onchange="foto1()"> -->
+            <input type="file" name="imagem" id="imagem">
+            <br>
         
     </form>
-    <script>function foto1(){document.getElementById("foto1a").src = "img/" (document.getElementById("img1").value).slice(12);}</script>
    
 
 
