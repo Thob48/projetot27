@@ -52,22 +52,25 @@ else {
                 <th>ID</th>
                 <th>NOME</th>
                 <th>DESCRIÇAO</th>
+                <th>QUANTIDADE</th>
                 <th>PRECO</th>
                 <th>IMAGEM</th>
-                <th>QUANTIDADE</th>
-                 <th>ALTERAR</th>
-                 <th>ATIVO</th>
+                <th>ALTERAR</th>
+                <th>ATIVO</th>
             </tr>
             <?php
                 while ($tbl = mysqli_fetch_array($resultado)){
                     ?>
                     <tr>
+
                         <td><?= $tbl[0]?></td>
+                        <td><?= $tbl[6]?></td>
                         <td><?= $tbl[1]?></td>
+
                         <td><?= $tbl[2]?></td>
                         <td>R$ <?= number_format($tbl[3],2,',','.')?></td>
-                        <td><img src="data:imagem/jpeg;base64,<?=$tbl[6]?>"width="100" height="100"></td>
-                        <td><?= $tbl[4]?></td>
+                        <td><img src="data:imagem/jpeg;base64,<?=$tbl[4]?>"width="100" height="100"></td>
+                        <td><?= $tbl[3]?></td>
                         <td><a href="alteraproduto.php?id=<?= $tbl[0]?>"><input type="button" value="ALTERAR"></a></td>
                         <td><?= $check = ($tbl[5] == "s")?"SIM":"NÃO"?></td>
 

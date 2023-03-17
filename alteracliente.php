@@ -18,7 +18,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     header("Location: listacliente.php");
     echo"<script>window.alert('CLIENTE ALTERADO!');</script>";
-
+    
 }
 
 $id = $_GET['id'];
@@ -75,7 +75,7 @@ while($tbl = mysqli_fetch_array($resultado)){
             <label>CIDADE</label>
             <input type="text" name="cidade", value="<?=$cidade?>" required>
             <br></br>
-
+            
             <label>STATUS: <?=$check = ($ativo == 's')?"ATIVO":"INATIVO"?></label><br>
 
             <input type="radio" name="ativo" value="s" <?=$ativo == "s"?"checked":""?>>ATIVO<br>

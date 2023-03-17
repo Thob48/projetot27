@@ -1,5 +1,5 @@
 <?php
-include("conectadb.php");
+include("../conectadb.php");
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $nome = $_POST["nome"];
@@ -21,12 +21,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
     #Verificação visual se usuario existe ou não.
     if($cont==1){
-        echo"<script>window.alert('USUARIO JÁ CADASTRADO!');</script>";
+        echo"<script>window.alert('CLIENTE JÁ CADASTRADO!');</script>";
     }
     else{
         $sql = "INSERT INTO clientes (cli_nome, cli_cpf, cli_senha, cli_datanasc, cli_telefone, cli_logradouro, cli_numero, cli_cidade, cli_ativo) VALUES('$nome','$cpf', '$senha', STR_TO_DATE('$datanasc','%Y-%m-%d'), '$telefone', '$logradouro','$numero','$cidade', 's')";
         mysqli_query($link,$sql);
-        header("Location: listacliente.php");
+        header("Location: loja.php");
     }
 }
 ?>
@@ -42,9 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 </head>
 
 <body>
-    <a href="homesistema.html"><input type="button" id="menuhome" value="HOME SISTEMA"></a>
+    <a href="loja.php"><input type="button" id="menuhome" value="VOLTAR PARA LOJA"></a>
     <div>
-        <form action="cadastracliente.php" method="post">
+        <form action="clientecadastra.php" method="post">
             <label>NOME</label>
             <input type="text" name="nome" required>
             <br></br>

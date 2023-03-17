@@ -1,25 +1,23 @@
 <?php
 #Traz arquivo de conexão do banco
 include("conectadb.php");
-#Carrega a Página trazendo clientes com s (clientes ATIVOS)
-$sql = "SELECT * FROM clientes WHERE cli_ativo = 's'";
+#Carrega a Página trazendo produtos com s (Produtos ATIVOS)
+$sql = "SELECT * FROM produtos WHERE pro_ativo = 's'";
 $resultado = mysqli_query($link, $sql);
-
-
 #Atribui s para variavel ativo
 $ativo = "s";
 #Aguarda ação POST na página
 if($_SERVER['REQUEST_METHOD']=='POST'){
     $ativo = $_POST['ativo'];
     #Confere se o POST da Página foi s
-    #Se s traga clientes ativos senão traga inativos
+    #Se s traga produtos ativos senão traga inativos
     if($ativo == 's'){
-        $sql = "SELECT * FROM clientes WHERE cli_ativo = 's'";
+        $sql = "SELECT * FROM produtos WHERE pro_ativo = 's'";
         $resultado = mysqli_query($link, $sql);
          
     }
     else{
-        $sql = "SELECT * FROM clientes WHERE cli_ativo = 'n'";
+        $sql = "SELECT * FROM produtos WHERE pro_ativo = 'n'";
         $resultado = mysqli_query($link, $sql);
     }
 }
@@ -38,7 +36,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 </head>
 <body>
     <a href="homesistema.html"><input type="button" id="menuhome" value="HOME SISTEMA"></a>
-    <form action="listacliente.php" method="post">
+    <form action="listaproduto.php" method="post" class="lista">
         <!-- Botões que validam se o produto é listado somente ativos ou inativos-->
         <!-- onclick="submit()" é um javascript que já faz um submit na página usando o navegador como recurso -->
         <!-- <//?=$ativo== Valida se o radio foi acionado (checked) e mantém a escolha se não ele traz em branco-->
@@ -49,16 +47,13 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         <table border="1">
             <tr>
                     <th>ID</th>
-                    <th>CPF</th>
                     <th>NOME</th>
-                    <th>DATA DE NASCIMENTO</th>
-                    <th>TELEFONE</th>
-                    <th>LOGRADOURO</th>
-                    <th>NUMERO</th>
-                    <th>CIDADE</th>
-                    <th>ATIVO</th>
+                    <th>DESCRIÇÃO</th>
+                    <th>QUANTIDADE</th>
+                    <th>PRECO</th>
+                    <th>IMAGEM</th>
                     <th>ALTERAR</th>
-                    
+                    <th>ATIVO</th>
             </tr>
             <?php
                 #Preenchimento da tabela com os dados do banco
@@ -66,20 +61,15 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                     ?>
                     <tr>
                         <td><?= $tbl[0]?></td>
+                        <td><?= $tbl[4]?></td>
                         <td><?= $tbl[1]?></td>
                         <td><?= $tbl[2]?></td>
-                        <td><?= $tbl[3]?></td>
-                        <td><?= $tbl[4]?></td>
-                        <td><?= $tbl[5]?></td>
-                        <td><?= $tbl[6]?></td>
-                        <td><?= $tbl[7]?></td>
                         <!-- linha abaixo converte formato da $tbl[3] usando 2 casas após a virgula e aplicando , ao lugar de ponto -->
-                        <td><?= $check = ($tbl[8] == 's')?"SIM":"NÃO"?></td>
-                        <td><a href="alteracliente.php?id=<?= $tbl[0]?>"><input type="button" value="ALTERAR"></a></td>
-                        
-                       
-                       
-                        
+                        <td>R$ <?= number_format($tbl[3],2,',','.')?></td>
+                        <td><img src="data:image/jpeg;base64,<?=$tbl[6]?>" width="100" height="100"></td>
+                        <td><a href="alteraproduto.php?id=<?= $tbl[0]?>"><input type="button" value="ALTERAR"></a></td>
+                        <!-- tbl[5] verifica se é s que está vindo do banco de dados, se sim. Escreva SIM senão escreva NÃO -->
+                        <td><?= $check = ($tbl[5] == 's')?"SIM":"NÃO"?></td>
                     </tr>
                     <?php
                 }

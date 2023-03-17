@@ -1,4 +1,3 @@
-
 <?php
 #Coleta as variáveis do name do html e abre a conexão com Banco
 if($_SERVER["REQUEST_METHOD"] == "POST"){

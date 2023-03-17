@@ -1,32 +1,36 @@
-<?php 
-#conexao do banco de dados
-include('conectadb.php');
+<?php
+#Conexão do Banco de Dados
+include("conectadb.php");
 
-#coleta de variaveis dos capos de texto HTML
-if ($_SERVER['REQUEST_METHOD']=='POST') {
-    $id=$_POST['id'];
-    $nome=$_POST['nome'];
-    $senha=$_POST['senha'];
-    $ativo=$_POST['ativo'];
-    #Instruçao sql para atualizaçao de usuario e senha
-    $sql="UPDATE usuarios SET usu_senha='$senha',usu_nome='$nome',usu_ativo='$ativo'  WHERE usu_id=$id";
-    mysqli_query($link,$sql);
-   
-    header("Location:listausuario.php");
-    echo"<script>window.alert('USUARIO ALTERNADO COM SUCESSO! ');</script>";
+#Coleta de Variáveis dos campos de texto HTML
+if($_SERVER['REQUEST_METHOD']=='POST'){
+    $id = $_POST['id'];
+    $nome = $_POST['nome'];
+    $senha = $_POST['senha'];
+    $ativo = $_POST['ativo'];
+    
+    #Instrução SQL para atualização de usuario e senha
+    $sql = "UPDATE usuarios SET usu_senha = '$senha', usu_nome='$nome', usu_ativo = '$ativo' WHERE usu_id ='$id'";
+    mysqli_query($link, $sql);
+    header("Location: listausuario.php");
+    echo"<script>window.alert('Usuario alterado com Sucesso!');</script>";
     exit();
+
 }
 
-#colentando id link exemplo alteusuario.php?id=2
+
+#Coletando ID via Link(URL) exemplo alterausuario.php?id=2
 $id = $_GET['id'];
-$sql ="SELECT * FROM usuarios WHERE usu_id='$id'";
-$resultado=mysqli_query($link,$sql);
-while ($tbl=mysqli_fetch_array($resultado)) {
-    $nome=$tbl[1];
-    $senha=$tbl[2];
-    $ativo=$tbl[3];
+$sql = "SELECT * FROM usuarios WHERE usu_id = $id";
+$resultado = mysqli_query($link, $sql);
+while($tbl = mysqli_fetch_array($resultado)){
+    $nome = $tbl[1];
+    $senha = $tbl[2];
+    $ativo = $tbl[3];
+
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,20 +38,8 @@ while ($tbl=mysqli_fetch_array($resultado)) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="newestilo.css">
-    <title>Altera Usuario</title>
+    <title>ALTERAR USUARIO</title>
 </head>
-<!-- <body>
-    <div>
-        <form action="alterausuario.php" method="post">
-         <input type="hidden" value="" name="id">
-         <label>NOME</label>
-         <input type="text" name="nome" id="nome" value=""required>
-         <label>SENHA</label>  
-         <input type="password" name="senha" id="senha" value=""required> 
-         <input type="submit" value="SALVAR">
-</form>
-</div>
-</body> -->
 <body>
 <a href="homesistema.html"><input type="button" id="menuhome" value="HOME SISTEMA"></a>
     <div>
