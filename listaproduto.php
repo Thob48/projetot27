@@ -61,11 +61,11 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                     ?>
                     <tr>
                         <td><?= $tbl[0]?></td>
-                        <td><?= $tbl[4]?></td>
                         <td><?= $tbl[1]?></td>
                         <td><?= $tbl[2]?></td>
+                        <td><?= $tbl[3]?></td>
                         <!-- linha abaixo converte formato da $tbl[3] usando 2 casas após a virgula e aplicando , ao lugar de ponto -->
-                        <td>R$ <?= number_format($tbl[3],2,',','.')?></td>
+                        <td>R$ <?= number_format($tbl[4],2,',','.')?></td>
                         <td><img src="data:image/jpeg;base64,<?=$tbl[6]?>" width="100" height="100"></td>
                         <td><a href="alteraproduto.php?id=<?= $tbl[0]?>"><input type="button" value="ALTERAR"></a></td>
                         <!-- tbl[5] verifica se é s que está vindo do banco de dados, se sim. Escreva SIM senão escreva NÃO -->

@@ -1,6 +1,6 @@
 <?php
 include("../conectadb.php");
-
+session_start();
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $nome = $_POST["nome"];
     $cpf = $_POST["cpf"];
