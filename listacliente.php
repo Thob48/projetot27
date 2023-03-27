@@ -1,6 +1,7 @@
 <?php
 #Traz arquivo de conexão do banco
 include("conectadb.php");
+
 #Carrega a Página trazendo clientes com s (clientes ATIVOS)
 $sql = "SELECT * FROM clientes WHERE cli_ativo = 's'";
 $resultado = mysqli_query($link, $sql);

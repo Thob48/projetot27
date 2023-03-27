@@ -1,7 +1,6 @@
 <?php
 #abre conexão com o banco de dados
 include("conectadb.php");
-
 #passa a instrução para o bando de dados
 #função da instrução: LISTAR TODOS O CONTEÚDO DA TABELA usuarios
 $sql="SELECT * FROM usuarios WHERE usu_ativo = 's'";

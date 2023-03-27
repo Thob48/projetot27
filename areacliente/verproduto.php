@@ -6,8 +6,8 @@ session_start();
 $idcliente = $_SESSION['idcliente'];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $idproduto = $_POST['idproduto'];
-    // $nomeproduto = $_POST['nomeproduto'];
-    // $descricao = $_POST['descricao'];
+    $nomeproduto = $_POST['nomeproduto'];
+    $descricao = $_POST['descricao'];
     $quantidade = $_POST['quantidade'];
     $preco = $_POST['preco'];
     $totalparcial = ($preco * $quantidade);
@@ -15,16 +15,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     #VARIAVEL CRIADA PARA INDENTIFICAÇAO DO CARRINHO
     $numerocarrinho = MD5($_SESSION['idcliente'] . date('d-m-Y-H:i'));
 
+    if ($idcliente <= 0) {
+        echo "<script>window.alert('VOCE PRECISA LOGAR ANTES DE ADICONAR UM ITEM');</script>";
+        echo "<script>window.location.href='loja.php';</script>";
+    }
+    else {
+        # code...
+    
     #VERIFICA SE O CARRINHO EXISTE
     $sql = "SELECT COUNT (numero_carrinho) FROM itens_carrinho INNER JOIN clientes ON 
   fk_cli_id=cli_id WHERE pro_id='$idproduto' AND carrinho_finalizado='n'";
+
     $resultado = mysqli_query($link, $sql);
     while (mysqli_fetch_array($resultado)) {
         $cont = $tbl[0];
         if ($cont == 0) {
-            $sql = "INSERT INTO itens_carrinhos(fk_pro_id,item_quantidade,fk_cli_id,valor_carrinho,numero_carrinho,carrinho_finalizado)
-
+            $sql = "INSERT INTO itens_carrinho(fk_pro_id,item_quantidade,fk_cli_id,valor_carrinho,numero_carrinho,carrinho_finalizado)
     Values('$idproduto','$quantidade','$idcliente','$totalparcial','$numerocarrinho','n')";
+            mysqli_query($link, $sql);
+
             echo "<script>windos.alert('PRODUTO ADICIONADO!);<script>";
             header("location:loja.php");
         } else {
@@ -43,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     }
 
+}
 }
 $idproduto = $_GET['id'];
 $sql = "SELECT * FROM produtos WHERE pro_id='$idproduto'";
@@ -78,7 +88,7 @@ while ($tbl = mysqli_fetch_array($resultado)) {
             <input type="number" name="quantidade" required>
             <br>
             <label>PREÇO</label>
-            <input type="decimal" name="preco" value="<?= $preco ?>" required disabled>
+            <input type="decimal" name="preco" value="<?= $preco ?>" required>
             <br>
             <img src="data:image/jpeg;base64,<?= $imagenatual ?>" width="150" height="150">
 

@@ -21,10 +21,30 @@ $ativo = "s";
     <title>LOJA DO PROJETO</title>
 </head>
 <body>
+    <?php
+    if (isset($_SESSION['idcliente'])){
+?>
+ <h1 style="background-color: withesmoke;">BOM DIA <?=$_SESSION['nomecliente'];?></h1>
+ <form id="formloja" action="logout.php" method="post">
+   
+ <a href="carrinho.php"><input type ="button" value="AREA CLIENTE"<?=$_SESSION['idcliente']?>></a>
+ <input type="submit" value="LOGOUT"> 
+</form>
+    
+<?php
+    }
+    else {
+    ?>
+    <form id="formloja" action="logout.php" method="post">
+        <a href="logincliente.php"><input type="button" value="LOGIN"></a>
+        <a href="clientecadastra.php"><input type="button" value="CRIAR LOGIN"></a>
+    </form>
+    <?php
+    }
+    ?>
     <!-- coleta nome do usuario na variavel sessão -->
-    <h1 style="background-color: withesmoke;">BOM DIA <?=$_SESSION['nomecliente'];?></h1>
-    <a href="logincliente.php"><input type="button" value="LOGIN"></a>
-    <a href="clientecadastra.php"><input type="button" value="CADASTRAR"></a>
+   
+    
     <form action="loja.php" method="post">
     <link rel="stylesheet" href="newestiloloja.css">
     <div class="container">
