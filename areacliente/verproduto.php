@@ -23,9 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         # code...
     
     #VERIFICA SE O CARRINHO EXISTE
-    $sql = "SELECT COUNT (numero_carrinho) FROM itens_carrinho INNER JOIN clientes ON 
-  fk_cli_id=cli_id WHERE pro_id='$idproduto' AND carrinho_finalizado='n'";
-
+    $sql = "SELECT COUNT(numero_carrinho) FROM itens_carrinho INNER JOIN clientes ON 
+  fk_cli_id=cli_id WHERE cli_id='$idcliente' AND carrinho_finalizado='n'";
+    echo($sql);
     $resultado = mysqli_query($link, $sql);
     while (mysqli_fetch_array($resultado)) {
         $cont = $tbl[0];
